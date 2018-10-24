@@ -4,7 +4,7 @@
 import sys
 
 
-pokemons = ['Bulbasaur, Squirtle, Charmander]
+pokemons = ['Bulbasaur, Squirtle, Charmander']
 
 
 def create_pokemon(pokemon_name):
