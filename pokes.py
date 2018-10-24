@@ -11,8 +11,7 @@ def create_pokemon(pokemon_name):
     global pokemons
 
     if pokemon_name not in pokemons:
-        pokemons += pokemon_name
-        _add_comma()
+        pokemons.append(pokemon_name)
     else:
         print('Pokemon already exist in pokemon\'s pokedex')
 
@@ -25,7 +24,8 @@ def update_pokemon(pokemon_name, updated_pokemon_name):
     global pokemons
 
     if pokemon_name in pokemons:
-        pokemons = pokemons.replace(pokemon_name + ',', updated_pokemon_name + ',')
+        index = pokemons.index(pokemon_name)
+        pokemons[index] = updated_pokemon_name
     else:
         not_in_pokemons()
 
@@ -34,16 +34,15 @@ def delete_pokemon(pokemon_name):
     global pokemons
 
     if pokemon_name in pokemons:
-        pokemons = pokemons.replace(pokemon_name + ',', '')
+        pokemons.remove(pokemon_name)
         list_pokemons()
     else:
         not_in_pokemons()
 
 
 def search_pokemon(pokemon_name):
-    pokemons_list = pokemons.split(',')
-
-    for pokemon in pokemons_list:
+    
+    for pokemon in pokemons:
         if pokemon != pokemon_name:
             continue
         else:
@@ -52,16 +51,8 @@ def search_pokemon(pokemon_name):
 
 
 def list_pokemons():
-    global pokemons
-
-    print ('The pokemons list is: ')
-    print (pokemons)
-
-
-def _add_comma():
-    global pokemons
-
-    pokemons += ','
+    for idx, pokemons in enumerate(pokemons):
+        print('{}: {}'.format(idx,pokemons))
 
 
 def _space_line():
