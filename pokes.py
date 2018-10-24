@@ -21,7 +21,7 @@ def retrieve_Pokemon():
     pass
 
 
-def update_Pokemon(pokemon_name, updated_pokemon_name):
+def update_pokemon(pokemon_name, updated_pokemon_name):
     global pokemons
 
     if pokemon_name in pokemons:
@@ -119,7 +119,7 @@ if __name__ == '__main__':
     elif command == 'U':
         pokemon_name = _get_pokemon_name()
         updated_pokemon_name = input('Whats is the updated pokemon name?: ')
-        update_pokemon(pokemon_name, updated_pokemon_name)
+        update_pokemon (pokemon_name, updated_pokemon_name)
         list_pokemons()
 
     elif command == 'D':
