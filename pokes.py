@@ -51,8 +51,8 @@ def search_pokemon(pokemon_name):
 
 
 def list_pokemons():
-    for idx, pokemons in enumerate(pokemons):
-        print('{}: {}'.format(idx,pokemons))
+    for idx, pokemon in enumerate(pokemons):
+        print('{}: {}'.format(idx,pokemon))
 
 
 def _space_line():
