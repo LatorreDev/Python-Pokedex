@@ -4,7 +4,7 @@
 import sys
 
 
-pokemons = ['Bulbasaur', 'Squirtle', 'Charmander']
+pokemons = ['Missingo', 'Bulbasaur', 'Squirtle', 'Charmander']
 
 
 def create_pokemon(pokemon_name):
@@ -41,7 +41,7 @@ def delete_pokemon(pokemon_name):
 
 
 def search_pokemon(pokemon_name):
-    
+
     for pokemon in pokemons:
         if pokemon != pokemon_name:
             continue
@@ -65,14 +65,14 @@ def not_in_pokemons():
 
 def _get_pokemon_name():
     pokemon_name = None
-    
+
     while not pokemon_name:
         pokemon_name = input('What is the pokemon name?: ')
 
         if pokemon_name == 'exit':
             pokemon_name = None
             break
-        
+
     if not pokemon_name:
         sys.exit()
 
