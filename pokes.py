@@ -5,6 +5,14 @@ import sys
 
 
 pokemons = [
+
+    {
+        'name': 'Missigno',
+        'typeA': 'bird',
+        'typeB': 'normal',
+        'abilities': 'unknow'
+    },
+
     {
         'name': 'Bulbasaur',
         'typeA': 'grass',
@@ -75,6 +83,9 @@ def search_pokemon(pokemon_name):
 
 
 def list_pokemons():
+    _space_line()
+    print ('*             Kanto National Pokedex             *' )
+    _space_line()
     print ('index | name      | TypeA | TypeB | abilities')
     for idx, pokemon in enumerate(pokemons):
         print('{uid}     | {name} | {typeA} | {typeB} | {abilities}'.format(
@@ -176,7 +187,7 @@ if __name__ == '__main__':
 
     elif command == 'E':
         _space_line
-        print('Thanks for using VentasLab services')
+        print('Thanks for using Dave\'s pokedex')
         exit()
     else:
         print ('Invalid command')
