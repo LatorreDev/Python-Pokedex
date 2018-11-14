@@ -62,15 +62,13 @@ def update_pokemon(pokemon_name, updated_pokemon_name):
         not_in_pokemons()
 
 
-def delete_pokemon(pokemon_name):
+def delete_pokemon(pokemon_id):
     global pokemons
 
-    if '{name}' in pokemons:
-        pokemons.remove(pokemon_name)
-        list_pokemons()
-    else:
-        not_in_pokemons()
-
+    for idx, pokemon in enumerate(pokemons):
+        if idx == pokemon_id:
+            del pokemons[idx]
+            break
 
 def search_pokemon(pokemon_name):
 
@@ -168,8 +166,10 @@ if __name__ == '__main__':
         list_pokemons()
 
     elif command == 'D':
-        pokemon_name = _get_pokemon_name()
-        delete_pokemon(pokemon_name)
+        pokemon_id = int(_get_pokemon_field('id'))
+        delete_pokemon(pokemon_id)
+
+        list_pokemons()
 
     elif command == 'L':
         list_pokemons()
