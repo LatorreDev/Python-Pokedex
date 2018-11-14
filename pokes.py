@@ -10,7 +10,7 @@ pokemons = [
         'name': 'Missigno',
         'typeA': 'bird',
         'typeB': 'normal',
-        'abilities': 'unknow'
+        'abilities': 'unknown'
     },
 
     {
