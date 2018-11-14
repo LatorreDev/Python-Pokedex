@@ -75,8 +75,15 @@ def search_pokemon(pokemon_name):
 
 
 def list_pokemons():
+    print ('index | name      | TypeA | TypeB | abilities')
     for idx, pokemon in enumerate(pokemons):
-        print('{}: {}'.format(idx,pokemon['name']))
+        print('{uid}     | {name} | {typeA} | {typeB} | {abilities}'.format(
+            uid = idx,
+            name = pokemon['name'],
+            typeA = pokemon['typeA'],
+            typeB = pokemon['typeB'],
+            abilities = pokemon['abilities']
+        ))
 
 
 def _space_line():
