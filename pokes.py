@@ -4,14 +4,38 @@
 import sys
 
 
-pokemons = ['Missingo', 'Bulbasaur', 'Squirtle', 'Charmander']
+pokemons = [
+    {
+        'name': 'Bulbasaur',
+        'typeA': 'grass',
+        'typeB': 'poison',
+        'abilities': 'overgrow' 
+    },
+
+    {
+        'name': 'Squirtle',
+        'typeA': 'water',
+        'typeB': 'none',
+        'abilities': 'torrent'   
+
+    },
+
+    {
+        'name': 'Charmander',
+        'typeA': 'fire',
+        'typeB': 'none',
+        'abilities': 'blaze' 
+    }
 
 
-def create_pokemon(pokemon_name):
+]
+
+
+def create_pokemon(pokemon):
     global pokemons
 
-    if pokemon_name not in pokemons:
-        pokemons.append(pokemon_name)
+    if pokemon not in pokemons:
+        pokemons.append(pokemon)
     else:
         print('Pokemon already exist in pokemon\'s pokedex')
 
@@ -52,7 +76,7 @@ def search_pokemon(pokemon_name):
 
 def list_pokemons():
     for idx, pokemon in enumerate(pokemons):
-        print('{}: {}'.format(idx,pokemon))
+        print('{}: {}'.format(idx,pokemon['name']))
 
 
 def _space_line():
@@ -61,6 +85,14 @@ def _space_line():
 
 def not_in_pokemons():
     print('pokemon is not in pokemons list')
+
+def _get_pokemon_field(field_name):
+    field = None
+
+    while not field:
+        field = input('What\'s the pokemon {}?: '.format(field_name))
+
+    return field
 
 
 def _get_pokemon_name():
@@ -100,8 +132,14 @@ if __name__ == '__main__':
     command = command.upper()
 
     if command == 'C':
-        pokemon_name = _get_pokemon_name()
-        create_pokemon(pokemon_name)
+        pokemon = {
+            'name' : _get_pokemon_field('name'),
+            'typeA' : _get_pokemon_field('typeA'),
+            'typeB' : _get_pokemon_field('typeB'),
+            'abilities' : _get_pokemon_field('abilities')
+        }
+
+        create_pokemon(pokemon)
         list_pokemons()
 
     elif command == 'R':
