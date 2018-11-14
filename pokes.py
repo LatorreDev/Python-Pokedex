@@ -65,7 +65,7 @@ def update_pokemon(pokemon_name, updated_pokemon_name):
 def delete_pokemon(pokemon_name):
     global pokemons
 
-    if pokemon_name in pokemons:
+    if '{name}' in pokemons:
         pokemons.remove(pokemon_name)
         list_pokemons()
     else:
@@ -75,12 +75,10 @@ def delete_pokemon(pokemon_name):
 def search_pokemon(pokemon_name):
 
     for pokemon in pokemons:
-        if pokemon != pokemon_name:
+        if pokemon['name'] != pokemon_name:
             continue
         else:
             return True
-
-
 
 def list_pokemons():
     _space_line()
@@ -177,13 +175,14 @@ if __name__ == '__main__':
         list_pokemons()
 
     elif command == 'S':
-        pokemon_name = _get_pokemon_name()
-        found = search_pokemon(pokemon_name)
+
+        pokemon_name = _get_pokemon_field('name')
+        found =  search_pokemon(pokemon_name)
 
         if found:
             print('pokemon is in the pokemon\'s list')
         else:
-            print('The pokemon: {} is not in our pokemon\'s list'.format(pokemon_name) )
+            print('The pokemon: {} is not in the pokedex'.format(pokemon_name))
 
     elif command == 'E':
         _space_line
