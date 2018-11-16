@@ -55,12 +55,11 @@ def retrieve_Pokemon():
 def update_pokemon(pokemon_name, updated_pokemon_name):
     global pokemons
 
-    if pokemon_name in pokemons:
-        index = pokemons.index(pokemon_name)
-        pokemons[index] = updated_pokemon_name
+    if len(pokemons) - 1 >= pokemon_id:
+        pokemons[pokemon_id] = updated_pokemon
     else:
-        not_in_pokemons()
-
+        print ('Pokemon is not in pokedex')
+    
 
 def delete_pokemon(pokemon_id):
     global pokemons
@@ -125,6 +124,16 @@ def _get_pokemon_name():
     return pokemon_name
 
 
+def _get_pokemon_from_user():
+    pokemon = {
+        'name': _get_pokemon_field('name'),
+        'typeA': _get_pokemon_field('typeA'),
+        'typeB': _get_pokemon_field('typeB'),
+        'abilities': _get_pokemon_field('abilities')
+    }
+
+    return pokemon
+
 def _print_welcome():
     _space_line()
     print('Welcome to Dave\'s Pokedex')
@@ -160,9 +169,10 @@ if __name__ == '__main__':
         pass
 
     elif command == 'U':
-        pokemon_name = _get_pokemon_name()
-        updated_pokemon_name = input('Whats is the updated pokemon name?: ')
-        update_pokemon (pokemon_name, updated_pokemon_name)
+        pokemon_id = int(_get_pokemon_field('id'))
+        updated_pokemon = _get_pokemon_from_user()
+
+        update_pokemon = (pokemon_id, updated_pokemon)
         list_pokemons()
 
     elif command == 'D':
