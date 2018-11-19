@@ -54,9 +54,9 @@ def list_pokemons():
     _space_line()
     print ('*             Kanto National Pokedex             *' )
     _space_line()
-    print ('index | name      | TypeA | TypeB | weight | height | abilities | description')
+    print ('index | name      | specie | TypeA | TypeB | weight | height | abilities | description')
     for idx, pokemon in enumerate(pokemons):
-        print('{uid}     | {name} | {typeA} | {typeB} | {weight} | {height} | {abilities} | {description}'.format(
+        print('{uid}     | {name} | {specie} | {typeA} | {typeB} | {weight} | {height} | {abilities} | {description}'.format(
             uid = idx,
             name = pokemon['name'],
             species = pokemon['species'],
