@@ -146,12 +146,7 @@ if __name__ == '__main__':
     command = command.upper()
 
     if command == 'C':
-        pokemon = {
-            'name' : _get_pokemon_field('name'),
-            'typeA' : _get_pokemon_field('typeA'),
-            'typeB' : _get_pokemon_field('typeB'),
-            'abilities' : _get_pokemon_field('abilities')
-        }
+        pokemon = _get_pokemon_from_user()
 
         create_pokemon(pokemon)
        
