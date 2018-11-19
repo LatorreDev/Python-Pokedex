@@ -56,7 +56,7 @@ def list_pokemons():
     _space_line()
     print ('index | name      | specie | TypeA | TypeB | weight | height | abilities | description')
     for idx, pokemon in enumerate(pokemons):
-        print('{uid}     | {name} | {specie} | {typeA} | {typeB} | {weight} | {height} | {abilities} | {description}'.format(
+        print('{uid}     | {name} | {species} | {typeA} | {typeB} | {weight} | {height} | {abilities} | {description}'.format(
             uid = idx,
             name = pokemon['name'],
             species = pokemon['species'],
