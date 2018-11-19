@@ -204,3 +204,5 @@ if __name__ == '__main__':
             print ('Invalid command')
 
         _save_pokemons_to_storage()
+
+    
