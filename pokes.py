@@ -1,202 +1,140 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import sys
+import csv
+import os
 
 
-pokemons = [
-
-    {
-        'name': 'Missigno',
-        'typeA': 'bird',
-        'typeB': 'normal',
-        'abilities': 'unknown'
-    },
-
-    {
-        'name': 'Bulbasaur',
-        'typeA': 'grass',
-        'typeB': 'poison',
-        'abilities': 'overgrow' 
-    },
-
-    {
-        'name': 'Squirtle',
-        'typeA': 'water',
-        'typeB': 'none',
-        'abilities': 'torrent'   
-
-    },
-
-    {
-        'name': 'Charmander',
-        'typeA': 'fire',
-        'typeB': 'none',
-        'abilities': 'blaze' 
-    }
+CLIENT_SCHEMA = ['name', 'company', 'email', 'position']
+CLIENT_TABLE = '.clients.csv'
+clients = []
 
 
-]
+def create_client(client):
+    global clients
 
-
-def create_pokemon(pokemon):
-    global pokemons
-
-    if pokemon not in pokemons:
-        pokemons.append(pokemon)
+    if client not in clients:
+        clients.append(client)
     else:
-        print('Pokemon already exist in pokemon\'s pokedex')
+        print('Client already in client\'s list')
 
 
-def retrieve_Pokemon():
-    pass
+def list_clients():
+    print('uid |  name  | company  | email  | position ')
+    print('*' * 50)
+
+    for idx, client in enumerate(clients):
+        print('{uid} | {name} | {company} | {email} | {position}'.format(
+            uid=idx, 
+            name=client['name'], 
+            company=client['company'], 
+            email=client['email'], 
+            position=client['position']))
 
 
-def update_pokemon(pokemon_name, updated_pokemon_name):
-    global pokemons
+def update_client(client_id, updated_client):
+    global clients
 
-    if len(pokemons) - 1 >= pokemon_id:
-        pokemons[pokemon_id] = updated_pokemon
+    if len(clients) - 1 >= client_id:
+        clients[client_id] = updated_client
     else:
-        print ('Pokemon is not in pokedex')
-    
+        print('Client not in client\'s list')
 
-def delete_pokemon(pokemon_id):
-    global pokemons
 
-    for idx, pokemon in enumerate(pokemons):
-        if idx == pokemon_id:
-            del pokemons[idx]
+def delete_client(client_id):
+    global clients
+
+    for idx, client in enumerate(clients):
+        if idx == client_id:
+            del clients[idx] 
             break
 
-def search_pokemon(pokemon_name):
 
-    for pokemon in pokemons:
-        if pokemon['name'] != pokemon_name:
+def search_client(client_name):
+    for client in clients:
+        if client['name'] != client_name:
             continue
         else:
             return True
 
-def list_pokemons():
-    _space_line()
-    print ('*             Kanto National Pokedex             *' )
-    _space_line()
-    print ('index | name      | TypeA | TypeB | abilities')
-    for idx, pokemon in enumerate(pokemons):
-        print('{uid}     | {name} | {typeA} | {typeB} | {abilities}'.format(
-            uid = idx,
-            name = pokemon['name'],
-            typeA = pokemon['typeA'],
-            typeB = pokemon['typeB'],
-            abilities = pokemon['abilities']
-        ))
 
-
-def _space_line():
-    print ('*' * 50)
-
-
-def not_in_pokemons():
-    print('pokemon is not in pokemons list')
-
-def _get_pokemon_field(field_name):
+def _get_client_field(field_name, message='What is the client {}?'):
     field = None
 
     while not field:
-        field = input('What\'s the pokemon {}?: '.format(field_name))
+        field = input(message.format(field_name))
 
     return field
 
 
-def _get_pokemon_name():
-    pokemon_name = None
-
-    while not pokemon_name:
-        pokemon_name = input('What is the pokemon name?: ')
-
-        if pokemon_name == 'exit':
-            pokemon_name = None
-            break
-
-    if not pokemon_name:
-        sys.exit()
-
-    return pokemon_name
-
-
-def _get_pokemon_from_user():
-    pokemon = {
-        'name': _get_pokemon_field('name'),
-        'typeA': _get_pokemon_field('typeA'),
-        'typeB': _get_pokemon_field('typeB'),
-        'abilities': _get_pokemon_field('abilities')
+def _get_client_from_user():
+    client = {
+        'name': _get_client_field('name'),
+        'company': _get_client_field('company'),
+        'email': _get_client_field('email'),
+        'position': _get_client_field('position'),
     }
 
-    return pokemon
+    return client
+
+
+def _initialize_clients_from_storage():
+    with open(CLIENT_TABLE, mode='r') as f:
+        reader = csv.DictReader(f, fieldnames=CLIENT_SCHEMA)
+
+        for row in reader:
+            clients.append(row)
+
+
+def _save_clients_to_storage():
+    tmp_table_name = '{}.tmp'.format(CLIENT_TABLE)
+    with open(tmp_table_name, mode='w') as f:
+        writer = csv.DictWriter(f, fieldnames=CLIENT_SCHEMA)
+        writer.writerows(clients)
+
+        os.remove(CLIENT_TABLE)
+        os.rename(tmp_table_name, CLIENT_TABLE)
+
 
 def _print_welcome():
-    _space_line()
-    print('Welcome to Dave\'s Pokedex')
-    _space_line()
-    print ('what would you want to do today?')
-    print ('[C]reate pokemon')
-    print ('[R]etrieve pokemon')
-    print ('[U]pdate pokemon')
-    print ('[D]elete pokemon')
-    print ('[L]ist pokemon')
-    print ('[S]earch pokemon')
-    print ('[E]xit')
+    print('WELCOME TO PLATZI VENTAS')
+    print('*' * 50)
+    print('What would you like to do today?:')
+    print('[C]reate client')
+    print('[L]ist clients')
+    print('[U]pdate client')
+    print('[D]elete client')
+    print('[S]earch client')
+
 
 if __name__ == '__main__':
-
+    _initialize_clients_from_storage()
     _print_welcome()
 
     command = input()
     command = command.upper()
 
     if command == 'C':
-        pokemon = {
-            'name' : _get_pokemon_field('name'),
-            'typeA' : _get_pokemon_field('typeA'),
-            'typeB' : _get_pokemon_field('typeB'),
-            'abilities' : _get_pokemon_field('abilities')
-        }
+        client = _get_client_from_user()
 
-        create_pokemon(pokemon)
-        list_pokemons()
-
-    elif command == 'R':
-        pass
-
-    elif command == 'U':
-        pokemon_id = int(_get_pokemon_field('id'))
-        updated_pokemon = _get_pokemon_from_user()
-
-        update_pokemon = (pokemon_id, updated_pokemon)
-        list_pokemons()
-
-    elif command == 'D':
-        pokemon_id = int(_get_pokemon_field('id'))
-        delete_pokemon(pokemon_id)
-
-        list_pokemons()
-
+        create_client(client)
     elif command == 'L':
-        list_pokemons()
+        list_clients()
+    elif command == 'U':
+        client_id = int(_get_client_field('id'))
+        updated_client = _get_client_from_user()
 
+        update_client(client_id, updated_client)
+    elif command == 'D':
+        client_id = int(_get_client_field('id'))
+
+        delete_client(client_id)
     elif command == 'S':
-
-        pokemon_name = _get_pokemon_field('name')
-        found =  search_pokemon(pokemon_name)
-
+        client_name = _get_client_field('name')
+        found = search_client(client_name)
+        
         if found:
-            print('pokemon is in the pokemon\'s list')
+            print('The client is in the client\'s list')
         else:
-            print('The pokemon: {} is not in the pokedex'.format(pokemon_name))
-
-    elif command == 'E':
-        _space_line
-        print('Thanks for using Dave\'s pokedex')
-        exit()
+            print('The client: {} is not in our client\'s list'.format(client_name))
     else:
-        print ('Invalid command')
+        print('Invalid command')
+
+_save_clients_to_storage()
