@@ -132,7 +132,7 @@ def _print_welcome():
     print ('[R]etrieve pokemon')
     print ('[U]pdate pokemon')
     print ('[D]elete pokemon')
-   # print ('[L]ist pokemon')
+    print ('[L]ist pokemon')
     print ('[S]earch pokemon')
     print ('[E]xit')
 
@@ -172,7 +172,8 @@ if __name__ == '__main__':
 
       
 
-    # elif command == 'L':
+    elif command == 'L':
+        print(list_pokemons()) 
      
 
     elif command == 'S':
