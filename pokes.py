@@ -4,12 +4,16 @@
 import sys
 import csv
 import os
+import signal
 
 POKEMON_SCHEMA = ['name', 'species', 'typeA', 'typeB', 'weight', 'height', 'abilities', 'description']
 POKEMON_TABLE = '.pokemons.csv'
 
 pokemons = [
 ]
+
+def program():
+    open('pokes.py','r')
 
 
 def create_pokemon(pokemon):
@@ -51,7 +55,6 @@ def search_pokemon(pokemon_name):
             return True
 
 def list_pokemons():
-    global main_program
     _space_line()
     print ('*                                            Kanto National Pokedex                                                     *' )
     _space_line()
@@ -117,8 +120,7 @@ def _get_pokemon_name():
         sys.exit()
 
     return pokemon_name
-
-
+    
 def _get_pokemon_from_user():
     pokemon = {
         'name': _get_pokemon_field('name'),
@@ -133,6 +135,9 @@ def _get_pokemon_from_user():
 
     return pokemon
 
+def pause():
+    input('Press any key to return to main menu: ')
+
 
 def _print_welcome():
     _space_line()
@@ -145,14 +150,16 @@ def _print_welcome():
     print ('[D]elete pokemon')
     print ('[L]ist pokemon')
     print ('[S]earch pokemon')
-    print ('[Q]Return to Main Menu')
     print ('[E]xit')
 
-def main_program():
 
-    if __name__ == '__main__':
 
-        _initialize_pokemons_from_storage()
+if __name__ == '__main__':
+
+    
+    _initialize_pokemons_from_storage()
+
+    while True:
 
         _print_welcome()
 
@@ -161,10 +168,8 @@ def main_program():
 
         if command == 'C':
             pokemon = _get_pokemon_from_user()
-
             create_pokemon(pokemon)
-        
-
+                
         elif command == 'R':
             pass
 
@@ -173,22 +178,16 @@ def main_program():
             updated_pokemon = _get_pokemon_from_user()
 
             update_pokemon(pokemon_id, updated_pokemon)
-        
-
+                
         elif command == 'D':
             pokemon_id = int(_get_pokemon_field('id'))
             delete_pokemon(pokemon_id)
 
-        
-
         elif command == 'L':
-            print(list_pokemons()) 
-            input('Print Q to return to main Menu: ')
-            if input == 'Q' or 'q':
-                main_program()
+            print(list_pokemons())
+            pause()
 
         elif command == 'S':
-
             pokemon_name = _get_pokemon_field('name')
             found =  search_pokemon(pokemon_name)
 
@@ -197,9 +196,6 @@ def main_program():
             else:
                 print('The pokemon: {} is not in the pokedex'.format(pokemon_name))
 
-        elif command == 'Q':
-            main_program()
-
         elif command == 'E':
             _space_line
             print('Thanks for using Dave\'s pokedex')
@@ -207,6 +203,4 @@ def main_program():
         else:
             print ('Invalid command')
 
-    _save_pokemons_to_storage()
-
-main_program()
+        _save_pokemons_to_storage()
