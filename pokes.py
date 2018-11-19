@@ -117,21 +117,6 @@ def _get_pokemon_name():
 
     return pokemon_name
 
-def _return_to_main_menu():
-
-    print('Press Q to return to main menu: ')
-
-    command = input()
-    command = command.upper()
-
-    if command == 'Q':
-       _main_program()
-
-    else: 
-        _space_line
-        print('Thanks for using Dave\'s pokedex')
-        exit()
-
 
 def _get_pokemon_from_user():
     pokemon = {
@@ -160,9 +145,11 @@ def _print_welcome():
     print ('[S]earch pokemon')
     print ('[E]xit')
 
-def options():
+if __name__ == '__main__':
 
     _initialize_pokemons_from_storage()
+
+    _print_welcome()
 
     command = input()
     command = command.upper()
@@ -171,9 +158,8 @@ def options():
         pokemon = _get_pokemon_from_user()
 
         create_pokemon(pokemon)
-
-        _return_to_main_menu()
        
+
     elif command == 'R':
         pass
 
@@ -182,23 +168,18 @@ def options():
         updated_pokemon = _get_pokemon_from_user()
 
         update_pokemon(pokemon_id, updated_pokemon)
-
-        _return_to_main_menu()
-        
+       
 
     elif command == 'D':
         pokemon_id = int(_get_pokemon_field('id'))
         delete_pokemon(pokemon_id)
 
-        _return_to_main_menu()
-
-        
+      
 
     elif command == 'L':
-        print(list_pokemons())
+        print(list_pokemons()) 
+     
 
-        _return_to_main_menu()
-        
     elif command == 'S':
 
         pokemon_name = _get_pokemon_field('name')
@@ -209,8 +190,6 @@ def options():
         else:
             print('The pokemon: {} is not in the pokedex'.format(pokemon_name))
 
-        _return_to_main_menu()
-
     elif command == 'E':
         _space_line
         print('Thanks for using Dave\'s pokedex')
@@ -219,15 +198,3 @@ def options():
         print ('Invalid command')
 
 _save_pokemons_to_storage()
-
-if __name__ == '__main__':
-
-    def _main_program():
-
-        _print_welcome()
-
-        options()
-
-    _main_program()
-
-    
