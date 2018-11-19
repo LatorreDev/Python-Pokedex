@@ -5,7 +5,7 @@ import sys
 import csv
 import os
 
-POKEMON_SCHEMA = ['name', 'typeA', 'typeB', 'abilities']
+POKEMON_SCHEMA = ['name', 'species', 'typeA', 'typeB', 'weight', 'height', 'abilities', 'description']
 POKEMON_TABLE = '.pokemons.csv'
 
 pokemons = [
@@ -52,9 +52,10 @@ def search_pokemon(pokemon_name):
 
 def list_pokemons():
     _space_line()
-    print ('*             Kanto National Pokedex             *' )
+    print ('*                                            Kanto National Pokedex                                                     *' )
     _space_line()
-    print ('index | name      | specie | TypeA | TypeB | weight | height | abilities | description')
+    print ('index |      name      |    specie   |   TypeA   |   TypeB   |   weight   |   height   |   abilities   |   description   |')
+    print (_space_line())
     for idx, pokemon in enumerate(pokemons):
         print('{uid}     | {name} | {species} | {typeA} | {typeB} | {weight} | {height} | {abilities} | {description}'.format(
             uid = idx,
@@ -86,7 +87,7 @@ def _save_pokemons_to_storage():
 
 
 def _space_line():
-    print ('*' * 50)
+    print ('*' * 121)
 
 
 def not_in_pokemons():
@@ -120,9 +121,13 @@ def _get_pokemon_name():
 def _get_pokemon_from_user():
     pokemon = {
         'name': _get_pokemon_field('name'),
+        'species':_get_pokemon_field('species'),
         'typeA': _get_pokemon_field('typeA'),
         'typeB': _get_pokemon_field('typeB'),
-        'abilities': _get_pokemon_field('abilities')
+        'weight': _get_pokemon_field('weight'),
+        'height': _get_pokemon_field('height'),
+        'abilities': _get_pokemon_field('abilities'),
+        'description': _get_pokemon_field('description')
     }
 
     return pokemon
