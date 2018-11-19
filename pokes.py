@@ -117,6 +117,21 @@ def _get_pokemon_name():
 
     return pokemon_name
 
+def _return_to_main_menu():
+
+    print('Press Q to return to main menu: ')
+
+    command = input()
+    command = command.upper()
+
+    if command == 'Q':
+       _main_program()
+
+    else: 
+        _space_line
+        print('Thanks for using Dave\'s pokedex')
+        exit()
+
 
 def _get_pokemon_from_user():
     pokemon = {
@@ -145,56 +160,73 @@ def _print_welcome():
     print ('[S]earch pokemon')
     print ('[E]xit')
 
+def options():
+
+        command = input()
+        command = command.upper()
+
+        if command == 'C':
+            pokemon = _get_pokemon_from_user()
+
+            create_pokemon(pokemon)
+
+            _return_to_main_menu()
+       
+
+        elif command == 'R':
+            pass
+
+        elif command == 'U':
+            pokemon_id = int(_get_pokemon_field('id'))
+            updated_pokemon = _get_pokemon_from_user()
+
+            update_pokemon(pokemon_id, updated_pokemon)
+
+            _return_to_main_menu()
+        
+
+        elif command == 'D':
+            pokemon_id = int(_get_pokemon_field('id'))
+            delete_pokemon(pokemon_id)
+
+            _return_to_main_menu()
+
+        
+
+        elif command == 'L':
+            print(list_pokemons())
+
+            _return_to_main_menu()
+        
+        elif command == 'S':
+
+            pokemon_name = _get_pokemon_field('name')
+            found =  search_pokemon(pokemon_name)
+
+            if found:
+                print('pokemon is in the pokemon\'s list')
+            else:
+                print('The pokemon: {} is not in the pokedex'.format(pokemon_name))
+
+            _return_to_main_menu()
+
+        elif command == 'E':
+            _space_line
+            print('Thanks for using Dave\'s pokedex')
+            exit()
+        else:
+            print ('Invalid command')
+
 if __name__ == '__main__':
 
     _initialize_pokemons_from_storage()
 
-    _print_welcome()
+    def _main_program():
 
-    command = input()
-    command = command.upper()
+        _print_welcome()
 
-    if command == 'C':
-        pokemon = _get_pokemon_from_user()
+        options()
 
-        create_pokemon(pokemon)
-       
+    _main_program()
 
-    elif command == 'R':
-        pass
-
-    elif command == 'U':
-        pokemon_id = int(_get_pokemon_field('id'))
-        updated_pokemon = _get_pokemon_from_user()
-
-        update_pokemon(pokemon_id, updated_pokemon)
-       
-
-    elif command == 'D':
-        pokemon_id = int(_get_pokemon_field('id'))
-        delete_pokemon(pokemon_id)
-
-      
-
-    elif command == 'L':
-        print(list_pokemons()) 
-     
-
-    elif command == 'S':
-
-        pokemon_name = _get_pokemon_field('name')
-        found =  search_pokemon(pokemon_name)
-
-        if found:
-            print('pokemon is in the pokemon\'s list')
-        else:
-            print('The pokemon: {} is not in the pokedex'.format(pokemon_name))
-
-    elif command == 'E':
-        _space_line
-        print('Thanks for using Dave\'s pokedex')
-        exit()
-    else:
-        print ('Invalid command')
-
-_save_pokemons_to_storage()
+    _save_pokemons_to_storage()
