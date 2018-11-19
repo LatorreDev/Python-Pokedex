@@ -158,7 +158,7 @@ if __name__ == '__main__':
         pokemon_id = int(_get_pokemon_field('id'))
         updated_pokemon = _get_pokemon_from_user()
 
-        update_pokemon = (pokemon_id, updated_pokemon)
+        update_pokemon(pokemon_id, updated_pokemon)
        
 
     elif command == 'D':
