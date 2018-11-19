@@ -51,6 +51,7 @@ def search_pokemon(pokemon_name):
             return True
 
 def list_pokemons():
+    global main_program
     _space_line()
     print ('*                                            Kanto National Pokedex                                                     *' )
     _space_line()
@@ -132,6 +133,7 @@ def _get_pokemon_from_user():
 
     return pokemon
 
+
 def _print_welcome():
     _space_line()
     print('Welcome to Dave\'s Pokedex')
@@ -143,58 +145,68 @@ def _print_welcome():
     print ('[D]elete pokemon')
     print ('[L]ist pokemon')
     print ('[S]earch pokemon')
+    print ('[Q]Return to Main Menu')
     print ('[E]xit')
 
-if __name__ == '__main__':
+def main_program():
 
-    _initialize_pokemons_from_storage()
+    if __name__ == '__main__':
 
-    _print_welcome()
+        _initialize_pokemons_from_storage()
 
-    command = input()
-    command = command.upper()
+        _print_welcome()
 
-    if command == 'C':
-        pokemon = _get_pokemon_from_user()
+        command = input()
+        command = command.upper()
 
-        create_pokemon(pokemon)
-       
+        if command == 'C':
+            pokemon = _get_pokemon_from_user()
 
-    elif command == 'R':
-        pass
+            create_pokemon(pokemon)
+        
 
-    elif command == 'U':
-        pokemon_id = int(_get_pokemon_field('id'))
-        updated_pokemon = _get_pokemon_from_user()
+        elif command == 'R':
+            pass
 
-        update_pokemon(pokemon_id, updated_pokemon)
-       
+        elif command == 'U':
+            pokemon_id = int(_get_pokemon_field('id'))
+            updated_pokemon = _get_pokemon_from_user()
 
-    elif command == 'D':
-        pokemon_id = int(_get_pokemon_field('id'))
-        delete_pokemon(pokemon_id)
+            update_pokemon(pokemon_id, updated_pokemon)
+        
 
-      
+        elif command == 'D':
+            pokemon_id = int(_get_pokemon_field('id'))
+            delete_pokemon(pokemon_id)
 
-    elif command == 'L':
-        print(list_pokemons()) 
-     
+        
 
-    elif command == 'S':
+        elif command == 'L':
+            print(list_pokemons()) 
+            input('Print Q to return to main Menu: ')
+            if input == 'Q' or 'q':
+                main_program()
 
-        pokemon_name = _get_pokemon_field('name')
-        found =  search_pokemon(pokemon_name)
+        elif command == 'S':
 
-        if found:
-            print('pokemon is in the pokemon\'s list')
+            pokemon_name = _get_pokemon_field('name')
+            found =  search_pokemon(pokemon_name)
+
+            if found:
+                print('pokemon is in the pokemon\'s list')
+            else:
+                print('The pokemon: {} is not in the pokedex'.format(pokemon_name))
+
+        elif command == 'Q':
+            main_program()
+
+        elif command == 'E':
+            _space_line
+            print('Thanks for using Dave\'s pokedex')
+            exit()
         else:
-            print('The pokemon: {} is not in the pokedex'.format(pokemon_name))
+            print ('Invalid command')
 
-    elif command == 'E':
-        _space_line
-        print('Thanks for using Dave\'s pokedex')
-        exit()
-    else:
-        print ('Invalid command')
+    _save_pokemons_to_storage()
 
-_save_pokemons_to_storage()
+main_program()
