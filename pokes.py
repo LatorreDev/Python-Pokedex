@@ -25,13 +25,13 @@ def retrieve_Pokemon():
     pass
 
 
-def update_pokemon(pokemon_name, updated_pokemon_name):
+def update_pokemon(pokemon_id, updated_pokemon):
     global pokemons
 
     if len(pokemons) - 1 >= pokemon_id:
         pokemons[pokemon_id] = updated_pokemon
     else:
-        print ('Pokemon is not in pokedex')
+        print('Pokemon is not in pokedex')
     
 
 def delete_pokemon(pokemon_id):
