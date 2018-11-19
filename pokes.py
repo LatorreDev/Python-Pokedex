@@ -6,42 +6,9 @@ import csv
 import os
 
 POKEMON_SCHEMA = ['name', 'typeA', 'typeB', 'abilities']
-CLIENT_TABLE = '.pokemons.csv'
+POKEMON_TABLE = '.pokemons.csv'
 
 pokemons = [
-
-    '''
-
-    {
-        'name': 'Missigno',
-        'typeA': 'bird',
-        'typeB': 'normal',
-        'abilities': 'unknown'
-    },
-
-    {
-        'name': 'Bulbasaur',
-        'typeA': 'grass',
-        'typeB': 'poison',
-        'abilities': 'overgrow' 
-    },
-
-    {
-        'name': 'Squirtle',
-        'typeA': 'water',
-        'typeB': 'none',
-        'abilities': 'torrent'   
-
-    },
-
-    {
-        'name': 'Charmander',
-        'typeA': 'fire',
-        'typeB': 'none',
-        'abilities': 'blaze' 
-    }
-'''
-
 ]
 
 
@@ -98,11 +65,11 @@ def list_pokemons():
         ))
 
 def _initialize_pokemons_from_storage():
-    with open(CLIENT_TABLE, mode='r') as f:
+    with open(POKEMON_TABLE, mode='r') as f:
         reader = csv.DictReader(f, fieldnames=POKEMON_SCHEMA)
 
         for row in reader:
-            pokemon.append(row)
+            pokemons.append(row)
 
 def _save_pokemons_to_storage():
     tmp_table_name = '{}.tmp'.format(POKEMON_TABLE)
@@ -110,8 +77,8 @@ def _save_pokemons_to_storage():
         writer = csv.DictWriter(f, fieldnames=POKEMON_SCHEMA)
         writer.writerows(pokemons)
 
-        os.remove(CLIENT_TABLE)
-        os.rename(tmp_table_name, CLIENT_TABLE)
+        os.remove(POKEMON_TABLE)
+        os.rename(tmp_table_name, POKEMON_TABLE)
 
 
 def _space_line():
