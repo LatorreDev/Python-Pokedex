@@ -2,9 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import csv
+import os
 
+POKEMON_SCHEMA = ['name', 'typeA', 'typeB', 'abilities']
+CLIENT_TABLE = '.pokemons.csv'
 
 pokemons = [
+
+    '''
 
     {
         'name': 'Missigno',
@@ -34,7 +40,7 @@ pokemons = [
         'typeB': 'none',
         'abilities': 'blaze' 
     }
-
+'''
 
 ]
 
@@ -91,6 +97,22 @@ def list_pokemons():
             abilities = pokemon['abilities']
         ))
 
+def _initialize_pokemons_from_storage():
+    with open(CLIENT_TABLE, mode='r') as f:
+        reader = csv.DictReader(f, fieldnames=POKEMON_SCHEMA)
+
+        for row in reader:
+            pokemon.append(row)
+
+def _save_pokemons_to_storage():
+    tmp_table_name = '{}.tmp'.format(POKEMON_TABLE)
+    with open(tmp_table_name, mode='w') as f:
+        writer = csv.DictWriter(f, fieldnames=POKEMON_SCHEMA)
+        writer.writerows(pokemons)
+
+        os.remove(CLIENT_TABLE)
+        os.rename(tmp_table_name, CLIENT_TABLE)
+
 
 def _space_line():
     print ('*' * 50)
@@ -143,11 +165,13 @@ def _print_welcome():
     print ('[R]etrieve pokemon')
     print ('[U]pdate pokemon')
     print ('[D]elete pokemon')
-    print ('[L]ist pokemon')
+   # print ('[L]ist pokemon')
     print ('[S]earch pokemon')
     print ('[E]xit')
 
 if __name__ == '__main__':
+
+    _initialize_pokemons_from_storage()
 
     _print_welcome()
 
@@ -163,7 +187,7 @@ if __name__ == '__main__':
         }
 
         create_pokemon(pokemon)
-        list_pokemons()
+       
 
     elif command == 'R':
         pass
@@ -173,16 +197,16 @@ if __name__ == '__main__':
         updated_pokemon = _get_pokemon_from_user()
 
         update_pokemon = (pokemon_id, updated_pokemon)
-        list_pokemons()
+       
 
     elif command == 'D':
         pokemon_id = int(_get_pokemon_field('id'))
         delete_pokemon(pokemon_id)
 
-        list_pokemons()
+      
 
-    elif command == 'L':
-        list_pokemons()
+    # elif command == 'L':
+     
 
     elif command == 'S':
 
@@ -200,3 +224,5 @@ if __name__ == '__main__':
         exit()
     else:
         print ('Invalid command')
+
+_save_pokemons_to_storage()
