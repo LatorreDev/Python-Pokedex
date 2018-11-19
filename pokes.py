@@ -4,12 +4,16 @@
 import sys
 import csv
 import os
+import signal
 
 POKEMON_SCHEMA = ['name', 'species', 'typeA', 'typeB', 'weight', 'height', 'abilities', 'description']
 POKEMON_TABLE = '.pokemons.csv'
 
 pokemons = [
 ]
+
+def program():
+    open('pokes.py','r')
 
 
 def create_pokemon(pokemon):
@@ -116,8 +120,7 @@ def _get_pokemon_name():
         sys.exit()
 
     return pokemon_name
-
-
+    
 def _get_pokemon_from_user():
     pokemon = {
         'name': _get_pokemon_field('name'),
@@ -132,6 +135,10 @@ def _get_pokemon_from_user():
 
     return pokemon
 
+def pause():
+    input('Press any key to return to main menu: ')
+
+
 def _print_welcome():
     _space_line()
     print('Welcome to Dave\'s Pokedex')
@@ -145,56 +152,57 @@ def _print_welcome():
     print ('[S]earch pokemon')
     print ('[E]xit')
 
+
+
 if __name__ == '__main__':
 
+    
     _initialize_pokemons_from_storage()
 
-    _print_welcome()
+    while True:
 
-    command = input()
-    command = command.upper()
+        _print_welcome()
 
-    if command == 'C':
-        pokemon = _get_pokemon_from_user()
+        command = input()
+        command = command.upper()
 
-        create_pokemon(pokemon)
-       
+        if command == 'C':
+            pokemon = _get_pokemon_from_user()
+            create_pokemon(pokemon)
+                
+        elif command == 'R':
+            pass
 
-    elif command == 'R':
-        pass
+        elif command == 'U':
+            pokemon_id = int(_get_pokemon_field('id'))
+            updated_pokemon = _get_pokemon_from_user()
 
-    elif command == 'U':
-        pokemon_id = int(_get_pokemon_field('id'))
-        updated_pokemon = _get_pokemon_from_user()
+            update_pokemon(pokemon_id, updated_pokemon)
+                
+        elif command == 'D':
+            pokemon_id = int(_get_pokemon_field('id'))
+            delete_pokemon(pokemon_id)
 
-        update_pokemon(pokemon_id, updated_pokemon)
-       
+        elif command == 'L':
+            print(list_pokemons())
+            pause()
 
-    elif command == 'D':
-        pokemon_id = int(_get_pokemon_field('id'))
-        delete_pokemon(pokemon_id)
+        elif command == 'S':
+            pokemon_name = _get_pokemon_field('name')
+            found =  search_pokemon(pokemon_name)
 
-      
+            if found:
+                print('pokemon is in the pokemon\'s list')
+            else:
+                print('The pokemon: {} is not in the pokedex'.format(pokemon_name))
 
-    elif command == 'L':
-        print(list_pokemons()) 
-     
-
-    elif command == 'S':
-
-        pokemon_name = _get_pokemon_field('name')
-        found =  search_pokemon(pokemon_name)
-
-        if found:
-            print('pokemon is in the pokemon\'s list')
+        elif command == 'E':
+            _space_line
+            print('Thanks for using Dave\'s pokedex')
+            exit()
         else:
-            print('The pokemon: {} is not in the pokedex'.format(pokemon_name))
+            print ('Invalid command')
 
-    elif command == 'E':
-        _space_line
-        print('Thanks for using Dave\'s pokedex')
-        exit()
-    else:
-        print ('Invalid command')
+        _save_pokemons_to_storage()
 
-_save_pokemons_to_storage()
+    
