@@ -72,7 +72,30 @@ def list(ctx):
 @click.pass_context
 def update(ctx,pokemon_uid):
     '''Updates a pokemon'''
-    pass
+    pokemon_service = PokemonService(ctx.obj['pokemons_table'])
+
+    pokemon_list = pokemon_service.list_pokemons()
+
+    pokemon = [pokemon for pokemon in pokemon_list if pokemon['uid'] == pokemon_uid]
+
+    if pokemon:
+        Pokemon = _update_pokemon_flow(Pokemon(**pokemon[0]))
+        pokemon_service.update_pokemon(pokemon)
+    else:
+        click.echo('Pokemon not found')
+
+
+def _update_pokemon_flow(pokemon):
+    click.echo('Leave empty if you dont want to modify the value')
+
+    pokemon.name = click.prompt('New name', type=str, default=pokemon.name)
+    pokemon.species = click.prompt('New species', type=str, default=pokemon.name)
+    pokemon.typeA = click.prompt('New Type A', type=str, default=pokemon.name)
+    pokemon.typeB = click.prompt('New Type B', type=str, default=pokemon.name)
+    pokemon.weight = click.prompt('New weight', type=int, default=pokemon.name)
+    pokemon.height = click.prompt('New height', type=int, default=pokemon.name)
+    pokemon.abilities = click.prompt('New abilities', type=str, default=pokemon.name)
+    pokemon.description = click.prompt('New description', type=str, default=pokemon.name)
 
 
 @pokemons.command()
